@@ -8,35 +8,22 @@
     tools:context=".MainActivity">
 
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/containerMap"
+
+    <com.google.android.gms.maps.MapView
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.MapView"
         android:layout_width="match_parent"
         android:layout_height="450dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="2dp"
-        android:padding="16dp"
-        app:cardCornerRadius="16dp"
+        map:mapType="normal"
+        map:uiCompass="true"
+        map:uiRotateGestures="true"
+        map:uiScrollGestures="true"
+        map:uiTiltGestures="true"
+        map:uiZoomControls="true"
+        map:uiZoomGestures="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <fragment
-            xmlns:map="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            map:mapType="normal"
-            map:uiCompass="false"
-            map:uiRotateGestures="true"
-            map:uiScrollGestures="false"
-            map:uiTiltGestures="true"
-            map:uiZoomControls="false"
-            map:uiZoomGestures="true"
-            />
-
-    </androidx.cardview.widget.CardView>
+        tools:ignore="MissingConstraints" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/containerLocation"
@@ -49,14 +36,42 @@
         app:cardCornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/containerMap">
+        app:layout_constraintTop_toBottomOf="@+id/map">
 
-        <TextView
-            android:id="@+id/tvLocation"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Location"
-            android:textSize="18sp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tvLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_coordenadas"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tvLongitud"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_longitud"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tvLatitud"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_latitud"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/btnFlush"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/label_flush" />
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
