@@ -55,11 +55,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         latitud = findViewById(R.id.tvLatitud);
         longitud = findViewById(R.id.tvLongitud);
         Button btnFlush = findViewById(R.id.btnFlush);
-        //SupportMapFragment map = SupportMapFragment.newInstance();
-        //getSupportFragmentManager().beginTransaction().add(R.id.map, map).commit();
-        //SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        //assert mapFragment != null;
-        //mapFragment.getMapAsync(this);
         MapView mapView = findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
@@ -93,7 +88,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMyLocationClick(@NonNull Location location) {
         latitud.setText("Latitud -> " +location.getLatitude());
         longitud.setText("Longitud -> "+location.getLongitude());
-        Log.i("Location", "Latitud: " + location.getLatitude() + " Longitud: " + location.getLongitude());
     }
 
     @Override
@@ -101,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if ( (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) || (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED))  {
             mMap.setMyLocationEnabled(true);
-            Log.d("Location", mMap.getMyLocation() + " ");
         }
     }
 
@@ -109,7 +102,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void enableMyLocation() {
         if ( (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) || (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED))  {
             mMap.setMyLocationEnabled(true);
-            Log.d("Location", mMap.getMyLocation() + " ");
         } else {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, catalogo.LOCATION_PERMISSION_REQUEST_CODE);
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, catalogo.LOCATION_PERMISSION_REQUEST_CODE_COARSE);

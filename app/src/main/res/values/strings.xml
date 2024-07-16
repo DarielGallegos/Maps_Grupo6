@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Maps_Grupo6</string>
-    <string name="api">AIzaSyA0HtnI0ESka1DzXsesYvGHbtHCUADbhSg</string>
+    <string name="api"></string>
 
     <string name="label_coordenadas">Coordenadas: </string>
     <string name="label_longitud">Longitud -> </string>
