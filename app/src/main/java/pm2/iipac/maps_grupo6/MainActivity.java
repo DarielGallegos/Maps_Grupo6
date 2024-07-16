@@ -62,8 +62,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         //mapFragment.getMapAsync(this);
         MapView mapView = findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
-        mapView.onResume();
         mapView.getMapAsync(this);
+        mapView.onStart();
         btnFlush.setOnClickListener(v -> flush());
     }
 
@@ -72,8 +72,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap = googleMap;
         mMap.getCameraPosition();
         mMap.setOnMyLocationButtonClickListener(this);
-        mMap.setOnMyLocationClickListener(this);
         enableMyLocation();
+        mMap.setOnMyLocationClickListener(this);
+
     }
 
     @Override
@@ -83,7 +84,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public boolean onMyLocationButtonClick() {
-        Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
+        latitud.setText("Latitud -> " +mMap.getMyLocation().getLatitude());
+        longitud.setText("Longitud -> "+mMap.getMyLocation().getLongitude());
         return false;
     }
 
@@ -94,6 +96,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         Log.i("Location", "Latitud: " + location.getLatitude() + " Longitud: " + location.getLongitude());
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if ( (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) || (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED))  {
+            mMap.setMyLocationEnabled(true);
+            Log.d("Location", mMap.getMyLocation() + " ");
+        }
+    }
+
     @SuppressLint("MissingPermission")
     private void enableMyLocation() {
         if ( (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) || (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED))  {
@@ -101,19 +112,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             Log.d("Location", mMap.getMyLocation() + " ");
         } else {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, catalogo.LOCATION_PERMISSION_REQUEST_CODE);
-            mMap.setMyLocationEnabled(true);
-        }
-
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED){
-            mMap.setMyLocationEnabled(true);
-        } else {
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_BACKGROUND_LOCATION}, catalogo.LOCATION_PERMISSION_REQUEST_CODE_BACKGROUND);
-        }
-
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED){
-            mMap.setMyLocationEnabled(true);
-        } else {
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.INTERNET}, catalogo.ACCESS_NETWORK_STATE_PERMISSION_REQUEST_CODE);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, catalogo.LOCATION_PERMISSION_REQUEST_CODE_COARSE);
         }
     }
 
@@ -122,7 +121,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         latitud.setText(R.string.label_latitud);
         longitud.setText(R.string.label_longitud);
     }
-
 
     @Override
     public void activate(@NonNull OnLocationChangedListener onLocationChangedListener) {

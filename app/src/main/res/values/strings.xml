@@ -4,6 +4,6 @@
 
     <string name="label_coordenadas">Coordenadas: </string>
     <string name="label_longitud">Longitud -> </string>
-    <string name="label_latitud">Latidud -> </string>
+    <string name="label_latitud">Latitud -> </string>
     <string name="label_flush">Limpiar</string>
 </resources>
